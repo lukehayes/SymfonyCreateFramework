@@ -12,7 +12,6 @@ $map = [
     '/bye' => 'bye.php',
 ];
 
-$path = $request->getPathInfo();
 
 if(isset($map[$path])) {
     require $map[$path];
@@ -22,4 +21,4 @@ if(isset($map[$path])) {
     $response->setContent("$map[$path] Not Found.");
 }
 
-$response->send();
+//$response->send();

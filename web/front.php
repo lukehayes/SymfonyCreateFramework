@@ -5,7 +5,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $request = Request::createFromGlobals();
-$request = Request::create('/hello?name=Luke');
 $response = new Response();
 
 $map = [
