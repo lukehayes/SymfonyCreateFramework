@@ -1,2 +1,3 @@
 <?php
-$response->setContent('Goodbye');
+
+echo "Goodbye";
