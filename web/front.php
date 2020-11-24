@@ -8,8 +8,8 @@ $request = Request::createFromGlobals();
 $response = new Response();
 
 $map = [
-    '/hello' => '../hello.php',
-    '/bye' => '../bye.php',
+    '/hello' => '../src/hello.php',
+    '/bye' => '../src/bye.php',
 ];
 
 $path = $request->getPathInfo();
