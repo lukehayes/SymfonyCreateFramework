@@ -9,11 +9,7 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 
 $request = Request::createFromGlobals();
-
-$routes = new RouteCollection();
-$routes->add('home', new Route('/'), [] );
-$routes->add('hello', new Route('/hello/{name}'), ['name' => 'World'] );
-$routes->add('bye', new Route('/bye'));
+$routes = include __DIR__ . "../src/app.php";
 
 $context = new RequestContext();
 $context->fromRequest($request);
@@ -21,18 +17,18 @@ $matcher = new UrlMatcher($routes, $context);
 
 $attributes = $matcher->match($request->getPathInfo());
 
-var_dump($attributes);
+dump($attributes);
+dump($matcher->match('/byea'));
 
+//if(isset($map[$path])) {
+    //ob_start();
+    //extract($request->query->all(), EXTR_SKIP);
+    //include sprintf(__DIR__ . '/../src/pages/%s.php', $map[$path]);
+    //$response = new Response(ob_get_clean());
 
-if(isset($map[$path])) {
-    ob_start();
-    extract($request->query->all(), EXTR_SKIP);
-    include sprintf(__DIR__ . '/../src/pages/%s.php', $map[$path]);
-    $response = new Response(ob_get_clean());
+//}else
+//{
+    //$response = new Response("Not Found", 404);
+//}
 
-}else
-{
-    $response = new Response("Not Found", 404);
-}
-
-$response->send();
+//$response->send();
