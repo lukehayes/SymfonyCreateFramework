@@ -12,15 +12,21 @@ $routes = include __DIR__ . "/../src/app.php";
 
 $context = new RequestContext();
 $context->fromRequest($request);
+$matcher = new UrlMatcher($routes, $context);
 
-try {
-
-    $matcher = new UrlMatcher($routes, $context);
-    extract( $matcher->match($request->getPathInfo()) , EXTR_SKIP);
+function render_template($request)
+{
+    global $matcher;
+    extract( $request->attributes->all(), EXTR_SKIP);
     ob_start();
     include sprintf(__DIR__ . "/../src/pages/%s.php", $_route);
+    return new Response(ob_get_clean());
+}
 
-    $response = new Response(ob_get_clean());
+try {
+    global $matcher;
+    $request->attributes->add($matcher->match($request->getPathInfo()));
+    $response = call_user_func('render_template', $request);
 
 } catch(ResourceNotFoundException $e) {
     $response = new Response("Not Found", 404);
